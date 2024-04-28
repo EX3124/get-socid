@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">获取主板id</string>
+    <string name="textview">没有获取</string>
+    <string name="copy">复制</string>
+</resources>
