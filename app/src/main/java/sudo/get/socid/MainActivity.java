@@ -38,22 +38,30 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button);
         TextView textView = findViewById(R.id.textView);
         button.setOnClickListener(v -> {
-            if (button.getText().equals(getString(R.string.copy)))
+            if (button.getText().equals(getString(R.string.copy))) {
                 ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText("label", textView.getText()));
-            else {
+                button.setText(R.string.exit);
+            } else if (button.getText().equals(getString(R.string.exit)))
+                finish();
+            else if (button.getText().equals(getString(R.string.app_name))) {
                 Process process;
                 try {
                     process = Runtime.getRuntime().exec("su");
-                } catch (IOException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
                 DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
                 DataInputStream dataInputStream = new DataInputStream(process.getInputStream());
                 try {
+                    dataOutputStream.writeBytes("chmod +r /sys/devices/soc0/serial_number \n");
+                    dataOutputStream.flush();
                     dataOutputStream.writeBytes("cat /sys/devices/soc0/serial_number \n");
                     dataOutputStream.flush();
                     String result = dataInputStream.readLine();
-                    if (result.matches("\\d+")) {
+                    if (result == null) {
+                        textView.setText(R.string.noroot);
+                        button.setText(R.string.exit);
+                    } else if (result.matches("\\d+")) {
                         textView.setText(result);
                         textView.setTextIsSelectable(true);
                         button.setText(R.string.copy);

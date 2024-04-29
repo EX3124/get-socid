@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">get socid</string>
     <string name="textview">empty</string>
+    <string name="noroot">can\'t exec "su"</string>
     <string name="copy">copy</string>
+    <string name="exit">exit</string>
 </resources>
