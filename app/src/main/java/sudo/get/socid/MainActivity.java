@@ -44,34 +44,37 @@ public class MainActivity extends AppCompatActivity {
             } else if (button.getText().equals(getString(R.string.exit)))
                 finish();
             else if (button.getText().equals(getString(R.string.app_name))) {
-                Process process;
+                Process process = null;
                 try {
                     process = Runtime.getRuntime().exec("su");
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    textView.setText(R.string.noroot);
+                    button.setText(R.string.exit);
                 }
-                DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
-                DataInputStream dataInputStream = new DataInputStream(process.getInputStream());
-                try {
-                    dataOutputStream.writeBytes("chmod +r /sys/devices/soc0/serial_number \n");
-                    dataOutputStream.flush();
-                    dataOutputStream.writeBytes("cat /sys/devices/soc0/serial_number \n");
-                    dataOutputStream.flush();
-                    String result = dataInputStream.readLine();
-                    if (result == null) {
-                        textView.setText(R.string.noroot);
-                        button.setText(R.string.exit);
-                    } else if (result.matches("\\d+")) {
-                        textView.setText(result);
-                        textView.setTextIsSelectable(true);
-                        button.setText(R.string.copy);
-                    } else if (result.matches("0x[0-9a-fA-F]+")) {
-                        String cover = result.substring(2);
-                        textView.setText(Integer.parseInt(cover, 16));
-                        textView.setTextIsSelectable(true);
-                        button.setText(R.string.copy);
+                if (process != null) {
+                    DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
+                    DataInputStream dataInputStream = new DataInputStream(process.getInputStream());
+                    try {
+                        dataOutputStream.writeBytes("chmod +r /sys/devices/soc0/serial_number \n");
+                        dataOutputStream.flush();
+                        dataOutputStream.writeBytes("cat /sys/devices/soc0/serial_number \n");
+                        dataOutputStream.flush();
+                        String result = dataInputStream.readLine();
+                        if (result == null) {
+                            textView.setText(R.string.noroot);
+                            button.setText(R.string.exit);
+                        } else if (result.matches("\\d+")) {
+                            textView.setText(result);
+                            textView.setTextIsSelectable(true);
+                            button.setText(R.string.copy);
+                        } else if (result.matches("0x[0-9a-fA-F]+")) {
+                            String cover = result.substring(2);
+                            textView.setText(Integer.parseInt(cover, 16));
+                            textView.setTextIsSelectable(true);
+                            button.setText(R.string.copy);
+                        }
+                    } catch (IOException ignored) {
                     }
-                } catch (IOException ignored) {
                 }
             }
         });
