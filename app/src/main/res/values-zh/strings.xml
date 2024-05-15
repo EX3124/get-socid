@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">获取主板id</string>
-    <string name="textview">没有获取</string>
-    <string name="noroot">没有root权限</string>
-    <string name="copy">复制</string>
-    <string name="exit">退出</string>
+    <string name="text">未获取</string>
+    <string name="text2">设备未root</string>
+    <string name="text3">没有root权限</string>
+    <string name="button">获取</string>
+    <string name="button2">复制</string>
+    <string name="button3">退出</string>
 </resources>

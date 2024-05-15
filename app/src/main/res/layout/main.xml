@@ -32,7 +32,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textview"
+            android:text="@string/text"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="48sp" />
@@ -55,7 +55,7 @@
                 android:id="@+id/button"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:text="@string/button" />
 
             <Space
                 android:layout_width="wrap_content"

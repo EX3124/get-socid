@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">get socid</string>
-    <string name="textview">empty</string>
-    <string name="noroot">can\'t exec "su"</string>
-    <string name="copy">copy</string>
-    <string name="exit">exit</string>
+    <string name="text">Not obtained</string>
+    <string name="text2">Device is not rooted</string>
+    <string name="text3">Unable to execute "su"</string>
+    <string name="button">get</string>
+    <string name="button2">copy</string>
+    <string name="button3">exit</string>
 </resources>

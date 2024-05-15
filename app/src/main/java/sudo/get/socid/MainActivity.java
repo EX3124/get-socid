@@ -38,18 +38,18 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button);
         TextView textView = findViewById(R.id.textView);
         button.setOnClickListener(v -> {
-            if (button.getText().equals(getString(R.string.copy))) {
+            if (button.getText().equals(getString(R.string.button2))) {
                 ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText("label", textView.getText()));
-                button.setText(R.string.exit);
-            } else if (button.getText().equals(getString(R.string.exit)))
+                button.setText(R.string.button3);
+            } else if (button.getText().equals(getString(R.string.button3)))
                 finish();
-            else if (button.getText().equals(getString(R.string.app_name))) {
+            else if (button.getText().equals(getString(R.string.button))) {
                 Process process = null;
                 try {
                     process = Runtime.getRuntime().exec("su");
                 } catch (IOException e) {
-                    textView.setText(R.string.noroot);
-                    button.setText(R.string.exit);
+                    textView.setText(R.string.text2);
+                    button.setText(R.string.button3);
                 }
                 if (process != null) {
                     DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
@@ -61,17 +61,17 @@ public class MainActivity extends AppCompatActivity {
                         dataOutputStream.flush();
                         String result = dataInputStream.readLine();
                         if (result == null) {
-                            textView.setText(R.string.noroot);
-                            button.setText(R.string.exit);
+                            textView.setText(R.string.text3);
+                            button.setText(R.string.button3);
                         } else if (result.matches("\\d+")) {
                             textView.setText(result);
                             textView.setTextIsSelectable(true);
-                            button.setText(R.string.copy);
+                            button.setText(R.string.button2);
                         } else if (result.matches("0x[0-9a-fA-F]+")) {
                             String cover = result.substring(2);
                             textView.setText(Integer.parseInt(cover, 16));
                             textView.setTextIsSelectable(true);
-                            button.setText(R.string.copy);
+                            button.setText(R.string.button2);
                         }
                     } catch (IOException ignored) {
                     }
